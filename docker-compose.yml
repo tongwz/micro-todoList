@@ -21,7 +21,7 @@ services:
       - ./logs/mysql/log:/var/log/mysql
 
     ports:
-      - "3306:3306"
+      - "3306:3307"
     networks:
       - todolist
 
@@ -80,7 +80,7 @@ services:
       - REDIS_PASSWORD=micro_todolist
       - ALLOW_EMPTY_PASSWORD=no
     ports:
-      - "6379:6379"
+      - "6379:6370"
     volumes:
       - /usr/local/redis:/usr/local/redis
     networks:
