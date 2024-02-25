@@ -5,25 +5,25 @@ networks:
     driver: bridge
 
 services:
-  mysql:
-    container_name: mysql
-    image: mysql:latest
-    restart: always
-    environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=micro_todolist
-      - MYSQL_USER=micro_todolist
-      - MYSQL_PASSWORD=micro_todolist
-      - TZ=Asia/Shanghai
-    volumes:
-      - /etc/localtime:/etc/localtime
-      - ./config/mysql:/var/lib/mysql
-      - ./logs/mysql/log:/var/log/mysql
-
-    ports:
-      - "3306:3307"
-    networks:
-      - todolist
+#  mysql:
+#    container_name: mysql
+#    image: mysql:latest
+#    restart: always
+#    environment:
+#      - MYSQL_ROOT_PASSWORD=root
+#      - MYSQL_DATABASE=micro_todolist
+#      - MYSQL_USER=micro_todolist
+#      - MYSQL_PASSWORD=micro_todolist
+#      - TZ=Asia/Shanghai
+#    volumes:
+#      - /etc/localtime:/etc/localtime
+#      - ./config/mysql:/var/lib/mysql
+#      - ./logs/mysql/log:/var/log/mysql
+#
+#    ports:
+#      - "3306:3307"
+#    networks:
+#      - todolist
 
   etcd:
     image: "quay.io/coreos/etcd:v3.5.5"
@@ -51,7 +51,7 @@ services:
     environment:
       - ETCD_HOSTS=http://etcd:2379
       - SW_STORAGE_ETCD_CLUSTER_NODES=etcd:2379
-      - HOST=127.0.0.1
+      - HOST=0.0.0.0
       - HOSTNAME=etcd-keeper
     links:
       - etcd
@@ -72,16 +72,16 @@ services:
     networks:
       - todolist
 
-  redis:
-    container_name: redis
-    image: redis:latest
-    restart: always
-    environment:
-      - REDIS_PASSWORD=micro_todolist
-      - ALLOW_EMPTY_PASSWORD=no
-    ports:
-      - "6379:6370"
-    volumes:
-      - /usr/local/redis:/usr/local/redis
-    networks:
-      - todolist
+#  redis:
+#    container_name: redis
+#    image: redis:latest
+#    restart: always
+#    environment:
+#      - REDIS_PASSWORD=micro_todolist
+#      - ALLOW_EMPTY_PASSWORD=no
+#    ports:
+#      - "6379:6370"
+#    volumes:
+#      - /usr/local/redis:/usr/local/redis
+#    networks:
+#      - todolist
