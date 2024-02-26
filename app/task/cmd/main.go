@@ -3,11 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-
-	"github.com/go-micro/plugins/v4/registry/etcd"
-	"go-micro.dev/v4"
-	"go-micro.dev/v4/registry"
-
 	"github.com/CocaineCong/micro-todoList/app/task/repository/db/dao"
 	"github.com/CocaineCong/micro-todoList/app/task/repository/mq"
 	"github.com/CocaineCong/micro-todoList/app/task/script"
@@ -15,6 +10,10 @@ import (
 	"github.com/CocaineCong/micro-todoList/config"
 	"github.com/CocaineCong/micro-todoList/idl/pb"
 	log "github.com/CocaineCong/micro-todoList/pkg/logger"
+	"github.com/go-micro/plugins/v4/registry/etcd"
+	"go-micro.dev/v4"
+	"go-micro.dev/v4/client"
+	"go-micro.dev/v4/registry"
 )
 
 func main() {
@@ -35,6 +34,8 @@ func main() {
 		micro.Name("rpcTaskService"), // 微服务名字
 		micro.Address(config.TaskServiceAddress),
 		micro.Registry(etcdReg), // etcd注册件
+		micro.Client(client.NewClient(client.Selector(script.NewRoundRobinSelector()))),
+		// micro.Selector(selector.NewSelector()),
 	)
 
 	// 结构命令行参数，初始化
